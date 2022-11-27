@@ -33,7 +33,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Voopite\\KeycloakGuard\\": "src/"
+            "Voopite\\KeycloakGuard\\": "src/Voopite/KeycloakGuard/"
         }
     },
     "autoload-dev": {
