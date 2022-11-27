@@ -4,7 +4,9 @@ namespace Voopite\KeycloakGuard;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
-
+use Voopite\EnvironmentEditor\EnvironmentEditor;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 /**
  * Class KeycloakGuardServiceProvider
  * @package Voopite\KeycloakGuard
@@ -17,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class KeycloakGuardServiceProvider extends ServiceProvider
 {
+    protected $editor = null;
     /**
      *
      * @TODO
@@ -28,6 +31,29 @@ class KeycloakGuardServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->mergeConfigFrom(__DIR__.'/../../../../../../config/keycloak.php', 'keycloak');
+
+        $this->editor = $this->app->make(EnvironmentEditor::class);
+
+
+        /**
+         * @TODO Isolar a chamada com a lib de trace se tiver presente...
+         */
+        try {
+            $this->editor->getKey("KEYCLOAK_REALM_PUBLIC_KEY");
+        } catch (\Jackiedo\DotenvEditor\Exceptions\KeyNotFoundException $exception) {
+
+            $url = $this->getIssuerUrl();
+
+            $json = $this->getIssuerDetails($url);
+
+            $publicKey = $json['public_key'];
+
+            $this->saveRealmPublicKey($publicKey);
+        }
+
+
+
+
     }
 
     /**
@@ -43,5 +69,42 @@ class KeycloakGuardServiceProvider extends ServiceProvider
         Auth::extend('keycloak', function ($app, $name, array $config) {
             return new KeycloakGuard(Auth::createUserProvider($config['provider']), $app->request);
         });
+    }
+
+    /**
+     * @return string
+     */
+    public function getIssuerUrl(): string
+    {
+        $config = config('keycloak');
+        $url = $config['keycloak_url'] . '/auth/realms/' . $config['realm_name'];
+        return $url;
+    }
+
+    /**
+     * @param string $url
+     * @return mixed
+     * @throws \JsonException
+     */
+    public function getIssuerDetails(string $url): mixed
+    {
+        $client = new Client();
+        $request = new Request('GET', $url);
+        $res = $client->sendAsync($request)->wait();
+
+        $data = (string)$res->getBody();
+        $json = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+        return $json;
+    }
+
+    /**
+     * @param mixed $publicKey
+     * @return void
+     */
+    public function saveRealmPublicKey(mixed $publicKey): void
+    {
+        $this->editor->addEmpty();
+        $this->editor->setKey('KEYCLOAK_REALM_PUBLIC_KEY', $publicKey, null, false);
+        $this->editor->save();
     }
 }
