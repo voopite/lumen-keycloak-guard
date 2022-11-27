@@ -27,7 +27,7 @@ class KeycloakGuardServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/keycloak.php', 'keycloak');
+        $this->mergeConfigFrom(__DIR__.'/../../../../../../config/keycloak.php', 'keycloak');
     }
 
     /**

@@ -2,6 +2,9 @@
 
 namespace Voopite\KeycloakGuard;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 /**
  * Class Token
  * @package Voopite\KeycloakGuard
