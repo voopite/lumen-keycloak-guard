@@ -28,6 +28,15 @@ class KeycloakGuard implements Guard
     private $decodedToken;
     private Request $request;
 
+    /**
+     *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
+     * @param UserProvider $provider
+     * @param Request $request
+     */
     public function __construct(UserProvider $provider, Request $request)
     {
         $this->config = config('keycloak');
@@ -41,6 +50,10 @@ class KeycloakGuard implements Guard
 
     /**
      * Decode token, validate and authenticate user
+     *
+     * @TODO
+     *
+     * @since 1.0.0
      *
      * @return mixed
      */
@@ -62,6 +75,10 @@ class KeycloakGuard implements Guard
     /**
      * Get the token for the current request.
      *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @return string
      */
     public function getTokenForRequest()
@@ -74,6 +91,10 @@ class KeycloakGuard implements Guard
     /**
      * Determine if the current user is authenticated.
      *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @return bool
      */
     public function check()
@@ -83,6 +104,10 @@ class KeycloakGuard implements Guard
 
     /**
      * Determine if the guard has a user instance.
+     *
+     * @TODO
+     *
+     * @since 1.0.0
      *
      * @return bool
      */
@@ -94,6 +119,10 @@ class KeycloakGuard implements Guard
     /**
      * Determine if the current user is a guest.
      *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @return bool
      */
     public function guest()
@@ -103,6 +132,10 @@ class KeycloakGuard implements Guard
 
     /**
      * Set the current user.
+     *
+     * @TODO
+     *
+     * @since 1.0.0
      *
      * @param \Illuminate\Contracts\Auth\Authenticatable $user
      * @return void
@@ -114,6 +147,10 @@ class KeycloakGuard implements Guard
 
     /**
      * Get the currently authenticated user.
+     *
+     * @TODO
+     *
+     * @since 1.0.0
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
@@ -133,6 +170,10 @@ class KeycloakGuard implements Guard
     /**
      * Get the ID for the currently authenticated user.
      *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @return int|null
      */
     public function id()
@@ -145,6 +186,10 @@ class KeycloakGuard implements Guard
     /**
      * Returns full decoded JWT token from athenticated user
      *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @return mixed|null
      */
     public function token()
@@ -154,6 +199,10 @@ class KeycloakGuard implements Guard
 
     /**
      * Validate a user's credentials.
+     *
+     * @TODO
+     *
+     * @since 1.0.0
      *
      * @param array $credentials
      * @return bool
@@ -187,6 +236,10 @@ class KeycloakGuard implements Guard
     /**
      * Validate if authenticated user has a valid resource
      *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @return void
      */
     private function validateResources()
@@ -205,6 +258,11 @@ class KeycloakGuard implements Guard
 
     /**
      * Check if authenticated user has a especific role into resource
+     *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @param string $resource
      * @param string $role
      * @return bool

@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Auth;
 class KeycloakGuardServiceProvider extends ServiceProvider
 {
     /**
+     *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @return void
      */
     public function boot()
@@ -26,6 +31,11 @@ class KeycloakGuardServiceProvider extends ServiceProvider
     }
 
     /**
+     *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @return void
      */
     public function register()

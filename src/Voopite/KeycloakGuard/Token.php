@@ -17,6 +17,10 @@ class Token
     /**
      * Decode a JWT token
      *
+     * @TODO
+     *
+     * @since 1.0.0
+     *
      * @param string|null $token
      * @param string|null $publicKey
      * @param int $leeway
@@ -32,6 +36,10 @@ class Token
 
     /**
      * Build a valid public key from a string
+     *
+     * @TODO
+     *
+     * @since 1.0.0
      *
      * @param  string  $key
      * @return mixed
