@@ -30,7 +30,11 @@ class KeycloakGuardServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../../../../../config/keycloak.php', 'keycloak');
+        $packageConfigPath = __DIR__ . '/config/keycloak.php';
+        $path = 'keycloak.php';
+        $appConfigPath=  $this->app->basePath() . '/config' . ($path ? '/' . $path : $path);
+
+        $this->mergeConfigFrom($appConfigPath, 'keycloak');
 
         $this->editor = $this->app->make(EnvironmentEditor::class);
 
